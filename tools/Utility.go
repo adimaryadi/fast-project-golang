@@ -99,3 +99,7 @@ func ResSuccess(c *gin.Context,data ...interface{})  {
 func ResError(c *gin.Context,data interface{},message string)  {
 	c.JSON(http.StatusOK, gin.H{"code": "80","data": data,"message": message})
 }
+
+func ResAll(c *gin.Context,data interface{},code string,message string)  {
+	c.JSON(http.StatusOK, gin.H{"code": code,"data": data,"message": message})
+}
