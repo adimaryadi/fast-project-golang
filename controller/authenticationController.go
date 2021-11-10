@@ -27,7 +27,12 @@ func MiddlewareAuth(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "78","message": "username password salah"})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"code": "00","message": "validate"})
+	token, err := tools.GenerateToken(input.ID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"code": "08","message": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": "00","message": token})
 }
 
 func RegisterAuth(c * gin.Context) {
