@@ -7,6 +7,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
 	"strings"
@@ -89,4 +90,12 @@ func ExtractTokenID(c *gin.Context) (uint, error) {
 		return uint(uid), nil
 	}
 	return 0, nil
+}
+
+func ResSuccess(c *gin.Context,data ...interface{})  {
+	c.JSON(http.StatusOK, gin.H{"code": "00","data": data,"message": "success"})
+}
+
+func ResError(c *gin.Context,data interface{},message string)  {
+	c.JSON(http.StatusOK, gin.H{"code": "80","data": data,"message": message})
 }

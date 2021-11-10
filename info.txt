@@ -1,0 +1,7 @@
+sample services sederhana
+- login jwt
+- db query gorm
+- database mysql
+
+github delelopment
+https://github.com/adimaryadi/fast-project-golang.git (

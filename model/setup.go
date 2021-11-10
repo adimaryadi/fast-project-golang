@@ -6,11 +6,6 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-type ResultSuccess struct {
-	 code      string `json:"code"`
-	 data      string `json:"data"`
-	 message   string `json:"message"`
-} 
 
 func SetupDB() *gorm.DB {
 	USER    := "root"
