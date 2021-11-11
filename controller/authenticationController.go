@@ -32,7 +32,9 @@ func MiddlewareAuth(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "08","message": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"code": "00","message": token})
+	userInfo  :=  model.UsersInfo{Token: token,Data: input}
+	tools.ResSuccess(c, userInfo)
+	//c.JSON(http.StatusOK, gin.H{"code": "00","message": token})
 }
 
 func RegisterAuth(c * gin.Context) {

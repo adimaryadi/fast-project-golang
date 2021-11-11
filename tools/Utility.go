@@ -92,6 +92,7 @@ func ExtractTokenID(c *gin.Context) (uint, error) {
 	return 0, nil
 }
 
+
 func ResSuccess(c *gin.Context,data ...interface{})  {
 	c.JSON(http.StatusOK, gin.H{"code": "00","data": data,"message": "success"})
 }

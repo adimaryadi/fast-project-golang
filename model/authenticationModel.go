@@ -5,3 +5,10 @@ type Authentification struct {
 	Username   string `form:"username" gorm: 40; unique json:"username" binding:"required"`
 	Password   string `form:"password" json:"password" binding:"required"`
 }
+
+
+
+type UsersInfo struct {
+	Token   string `json:"token"`
+	Data    interface{}
+}
