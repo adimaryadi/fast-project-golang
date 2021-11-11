@@ -1,9 +1,13 @@
 package model
 
+import (
+	"time"
+)
+
 type Transaction struct {
 	ID             uint    `json:"id" gorm:"primary_key"`
 	Po_number      string  `json:"po_number"`
-	Po_date        string  `json:"po_date"`
+	Po_date        time.Time  `json:"po_date"`
 	Po_price_total int     `json:"po_price_total"`
 	Po_cost_total  int     `json:"po_cost_total"`
 }

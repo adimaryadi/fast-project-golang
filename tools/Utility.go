@@ -59,10 +59,12 @@ func TokenValid(c *gin.Context) error {
 
 func ExtractToken(c *gin.Context) string {
 	token := c.Query("token")
+
 	if token != "" {
 		return token
 	}
 	bearerToken := c.Request.Header.Get("Authorization")
+
 	if len(strings.Split(bearerToken, " ")) == 2 {
 		return strings.Split(bearerToken, " ")[1]
 	}
@@ -103,4 +105,25 @@ func ResError(c *gin.Context,data interface{},message string)  {
 
 func ResAll(c *gin.Context,data interface{},code string,message string)  {
 	c.JSON(http.StatusOK, gin.H{"code": code,"data": data,"message": message})
+}
+
+func Timer(tick time.Duration) {
+	ticker   := time.NewTicker(tick)
+	defer ticker.Stop()
+	done     := make(chan bool)
+	sleep  	 := 1 * time.Second
+	go func() {
+		time.Sleep(sleep)
+		done <- true
+	}()
+	ticks := 0
+	for  {
+		select {
+		case <- done:
+			fmt.Printf("%v × %v ticks in %v\n", ticks, tick, sleep)
+			return
+		case <-ticker.C:
+			ticks++
+		}
+	}
 }

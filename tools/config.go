@@ -1,6 +1,9 @@
 package tools
 
-import "os"
+import (
+	"os"
+	"time"
+)
 
 func SetConfig() {
 	os.Setenv("token_duration" ,"1")
@@ -11,4 +14,13 @@ func SetConfig() {
 	os.Setenv("passMysql","")
 	os.Setenv("portMysql","3306")
 	os.Setenv("dbMysql","tester")
+
+}
+
+func SessionTimer() {
+	start := time.Duration(1 * time.Millisecond)
+	end   := start / 1000
+	for tick := start; tick >= end; {
+		Timer(tick)
+	}
 }

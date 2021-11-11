@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"github.com/vigneshuvi/GoDateFormat"
+	"time"
 )
 
 func FindTransaction(c *gin.Context) {
@@ -24,7 +25,7 @@ func CreateTransaction(c *gin.Context) {
 		tools.ResError(c, input,"Gagal Transaksi")
 	}
 	fmt.Println(input.Po_number)
-	date      :=   tools.GetToday(GoDateFormat.ConvertFormat("yyyy-mm-dd"))
+	date      :=   time.Now()
 	PO_number :=   tools.GetToday(GoDateFormat.ConvertFormat("yyyymm"))
 	data  :=   model.Transaction{Po_number: PO_number,Po_date: date, Po_price_total: input.Po_price_total, Po_cost_total: input.Po_cost_total}
 	db    :=   c.MustGet("db").(*gorm.DB)
