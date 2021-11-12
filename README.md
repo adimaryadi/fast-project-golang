@@ -1,5 +1,14 @@
 # fast-project-golang
 
+sample services sederhana
+- login jwt
+- db query gorm
+- database mysql
+- info sesi token di file config go terdapat token_duration itu adalah per menit token_secret boleh di ganti bebas 
+
+
+Template ini semoga bermamfaat bagi pemula
+
 data base mengunakan mysql 
 auto migrasi mengunakan gorm 
 Standar MVC
