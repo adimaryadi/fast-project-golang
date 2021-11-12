@@ -63,12 +63,14 @@ func RegisterAuth(c * gin.Context) {
 	var input model.Authentification
 
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"code": "99", "message": err.Error()})
+		//c.JSON(http.StatusBadRequest, gin.H{"code": "99", "message": err.Error()})
+		tools.ResError(c,input,"Gagal Input user")
 		return
 	}
 	hashPassword :=  tools.EncryptionSha256([]byte(input.Password))
 	save 	 	 :=  model.Authentification{Username: input.Username, Password: hashPassword}
 	db 	 	 	 :=  c.MustGet("db").(*gorm.DB)
 	db.Create(&save)
-	c.JSON(http.StatusOK, gin.H{"code": "00","message": "Create users "+input.Username})
+	tools.ResSuccess(c,save)
+	//c.JSON(http.StatusOK, gin.H{"code": "00","message": "Create users "+input.Username})
 }

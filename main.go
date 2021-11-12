@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crudMysql/migration"
 	"crudMysql/model"
 	"crudMysql/router"
 	"crudMysql/tools"
@@ -10,9 +11,7 @@ import (
 func main() {
 	tools.SetConfig()
 	db := model.SetupDB()
-	db.AutoMigrate(&model.Transaction{})
-	db.AutoMigrate(&model.Authentification{})
-	db.AutoMigrate(&model.SessionToken{})
+	migration.Execution()
 	r := router.SetupRouter(db)
 	r.Run(":"+os.Getenv("port"))
 }
