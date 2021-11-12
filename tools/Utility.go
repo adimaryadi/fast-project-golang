@@ -20,6 +20,14 @@ func GetToday(format string) (todayString string) {
 	return
 }
 
+func GetDateFormat(format string,time time.Time) (todayString string) {
+	today := time
+	todayString = today.Format(format)
+	return
+}
+
+
+
 func EncryptionSha256(data []byte) string {
 	hash   	 :=  	sha256.New()
 	hash.Write(data)
@@ -37,8 +45,8 @@ func GenerateToken(userId uint) (string, error) {
 
 	claim := jwt.MapClaims{}
 	claim["authorized"]   =   true
-	claim["user_id"]  	  = userId
-	claim["exp"] 		  =   time.Now().Add(time.Hour * time.Duration(tokenDuration)).Unix()
+	claim["user_id"]  	  =   userId
+	claim["exp"] 		  =   time.Now().Add(time.Minute * time.Duration(tokenDuration)).Unix()
 	token  :=  jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
 	return token.SignedString([]byte(os.Getenv("token_secret")))
 }
@@ -69,6 +77,43 @@ func ExtractToken(c *gin.Context) string {
 		return strings.Split(bearerToken, " ")[1]
 	}
 	return ""
+}
+
+func ReadToken(c *gin.Context) string {
+	token := c.Query("token")
+
+	if token != "" {
+		return token
+	}
+	bearerToken := c.Request.Header.Get("Authorization")
+
+	return bearerToken
+}
+
+type MapKey struct {
+	key string
+	val []string
+}
+
+func DecryptJWT(tokenStr string,getStr string) interface{} {
+	removeBearer := strings.Replace(tokenStr,"Bearer ","",-1)
+	claim   :=  jwt.MapClaims{}
+	_, err := jwt.ParseWithClaims(removeBearer,claim, func(token *jwt.Token) (i interface{}, err error) {
+		return []byte(os.Getenv("token_secret")), nil
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	return claim[getStr]
+}
+
+func InTimeSpan(start, end, check time.Time) bool {
+	return check.After(start) && check.Before(end)
+}
+
+func GetToken(tokenStr string) string {
+	removeBearer := strings.Replace(tokenStr,"Bearer ","",-1)
+	return removeBearer
 }
 
 func ExtractTokenID(c *gin.Context) (uint, error) {

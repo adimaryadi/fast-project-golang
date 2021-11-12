@@ -5,7 +5,11 @@ import (
 	"crudMysql/tools"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
+	"log"
 	"net/http"
+	"os"
+	"strconv"
+	"time"
 )
 
 func FindUsers(c *gin.Context) {
@@ -32,6 +36,24 @@ func MiddlewareAuth(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "08","message": err.Error()})
 		return
 	}
+	var session model.SessionToken
+	if err := db.Where("user_id = ?",input.ID).First(&session).Error; err != nil {
+		startTime 	 	    :=   time.Now()
+		tokenDuration, err := strconv.Atoi(os.Getenv("token_duration"))
+		if err != nil {
+			log.Fatal(err)
+		}
+		endTime 	 	 	:= 	 startTime.Add(time.Minute * time.Duration(tokenDuration))
+		createSession 	 	:=   model.SessionToken{UserId: input.ID,Username: input.Username,StartSession: startTime,EndSession: endTime}
+		db.Create(&createSession)
+	}
+	startTime 	 	    :=   time.Now()
+	tokenDuration, err := strconv.Atoi(os.Getenv("token_duration"))
+	endTime 	 	 	:= 	 startTime.Add(time.Minute * time.Duration(tokenDuration))
+    var updateSession model.SessionToken
+	updateSession.StartSession      =   startTime
+	updateSession.EndSession  		= 	endTime
+	db.Model(&session).Updates(updateSession)
 	userInfo  :=  model.UsersInfo{Token: token,Data: input}
 	tools.ResSuccess(c, userInfo)
 	//c.JSON(http.StatusOK, gin.H{"code": "00","message": token})
