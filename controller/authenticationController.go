@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"crudMysql/model"
-	"crudMysql/tools"
+	"fast-project-golang/model"
+	"fast-project-golang/tools"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"log"

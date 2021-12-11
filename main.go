@@ -1,10 +1,10 @@
 package main
 
 import (
-	"crudMysql/migration"
-	"crudMysql/model"
-	"crudMysql/router"
-	"crudMysql/tools"
+	"fast-project-golang/migration"
+	"fast-project-golang/model"
+	"fast-project-golang/router"
+	"fast-project-golang/tools"
 	"os"
 )
 

@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"crudMysql/tools"
+	"fast-project-golang/tools"
 	"github.com/gin-gonic/gin"
 )
 

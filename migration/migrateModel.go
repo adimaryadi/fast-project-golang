@@ -1,6 +1,6 @@
 package migration
 
-import "crudMysql/model"
+import "fast-project-golang/model"
 
 func Execution()  {
 	db := model.SetupDB()

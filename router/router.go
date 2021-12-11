@@ -1,8 +1,8 @@
 package router
 
 import (
-	"crudMysql/controller"
-	"crudMysql/middleware"
+	"fast-project-golang/controller"
+	"fast-project-golang/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 )
