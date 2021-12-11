@@ -1,4 +1,4 @@
-module crudMysql
+module fast-project-golang
 
 go 1.16
 
