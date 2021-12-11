@@ -1,4 +1,4 @@
-module github.com/adimaryadi/fast-project-golang
+module fast-project-golang
 
 go 1.16
 
